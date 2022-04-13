@@ -2,6 +2,21 @@
 
 class PostModel extends Model {
 
+
+    public function insertPost(array $data){
+
+        $post = [
+            'id' => intval(microtime(true) * 1000),
+            'createdBy' => $data['createdBy'],
+            'body' => $data['body'],
+            'postingDate' => date('c')
+        ];
+
+        $result = $this->writeJSON('posts', $post);
+
+        return $result;
+    }
+
     public function writingTest(){
 
         $post = [

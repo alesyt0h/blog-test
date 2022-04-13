@@ -15,17 +15,21 @@
         <div class="mb-20">
             <form action="" method="POST" id="searchForm">
                 <div class="flex">
+                    <!-- Search Input -->
                     <div class="relative">
                         <label for="from">⠀</label>
                         <input type="text" name="search" class="input mr-5 search-date" value="<?php echo $_POST['search'] ?? ''; ?>" placeholder="Search..">
+                        <input type="hidden" name="type" value="search">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 pointer absolute glass-icon" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2" onclick="document.querySelector('#searchForm').submit()" onkeydown="">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
-                    <button class="btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
+                    <!-- Advanced Search Button -->
+                    <button class="ml-5 btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
                             type="button" onclick="this.classList.toggle('hidden');this.nextElementSibling.classList.toggle('hidden')">
                         Advanced Search
                     </button>
+                    <!-- DateTime Selectors -->
                     <div class="flex-row flex <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? '' : 'hidden'; ?>">
                         <div>
                             <label for="from" class="ml-5">From:</label>
@@ -81,6 +85,7 @@
             <form action="" method="POST">
                 <div class="flex justify-between">
                     <textarea name="postMessage" class="w-full m-20" rows="3" placeholder="Write a comment..." maxlength="255"></textarea>
+                    <input type="hidden" name="type" value="post">
                     <button type="submit" class="btn post-btn center ml-5 mr-5">Submit</button>
                 </div>
             </form>
