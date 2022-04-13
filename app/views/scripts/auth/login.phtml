@@ -1,1 +1,38 @@
 <?php echo $this->message; ?>
+<div style="background: white">
+    <form action="" method="POST">
+        <div class="flexed-card">
+            <h1 class="center">Log in</h1>
+
+            <!-- TODO stylize error msg -->
+            <span>
+                <?php 
+                    echo $_SESSION['error'] ?? '';
+                    unset($_SESSION['error']);
+                ?>
+            </span>
+
+            <label for="username" class="ml-10 bold">Username</label>
+            <input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?? '' ?>">
+            <br>
+            <label for="password" class="ml-10 bold">Password</label>
+            <input type="password" name="password" placeholder="Password">
+    
+            <!-- TODO eye icon -->
+            <div>
+                <input type="checkbox" onclick="passwordShow()">Show Password
+            </div>
+
+            <button type="submit">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function passwordShow() {
+        const passInput = document.querySelector("input[name='password']");
+
+        passInput.type = (passInput.type === 'password') ? 'text' : 'password';
+    }
+</script>

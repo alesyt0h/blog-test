@@ -1,3 +1,32 @@
 html, body {
     background: rgb(192, 192, 192);
 }
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card {
+    width: 500px;
+}
+
+.flexed-card {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    align-self: center;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
