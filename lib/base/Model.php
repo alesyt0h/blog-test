@@ -14,7 +14,9 @@ class Model
 	public function __construct(){
         // Parse the DB's
         $this->parseJSON('posts');
+        // Must fetch posts
         $this->parseJSON('users');
+        // Must fetch users
     }
 
 	/**
@@ -32,7 +34,34 @@ class Model
 
         $jsonRaw = file_get_contents($this->dbDir . $file);
         $this->_jsonData = json_decode($jsonRaw, true);
+
+        return $this->_jsonData;
     }
 
+    /**
+     * Writes the current array state to the respective JSON database
+     * @param string $db the database being written. Only users & posts are valid values
+     * @param array $data the data to append to the database
+     */
+    public function writeJSON(string $db, array $data = []){
+        $this->_jsonData = $this->parseJSON($db) ?? [];
+        $db = $this->dbChecker($db);
+
+        array_push($this->_jsonData, $data);
+
+        $rawData = json_encode($this->_jsonData, JSON_PRETTY_PRINT);
+        $result = @file_put_contents($this->dbDir . substr($db, 1) . '.json', $rawData);
+
+        return $result;
+    }
+
+    /**
+     * Checks if DB is the correct type
+     * @param string $db the database
+     * @return exception|string returns an exception if DB wasn't users or posts, else append _ to the DB name and returns it 
+     */
+    protected function dbChecker(string $db){
+        return ($db !== 'users' && $db !== 'posts') ? throw new Exception('Not a valid Database!') : $db = '_' . $db; 
+    }
 
 }
