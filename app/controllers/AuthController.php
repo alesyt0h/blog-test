@@ -4,7 +4,9 @@ class AuthController extends ApplicationController {
     
     protected $errMsg = '';
 
-    public function __construct(){}
+    public function __construct(){
+        $this->userDB = new UserModel();
+    }
     
     public function loginAction(){
         $this->view->setTitle('Login | ' . APP_TITLE);
@@ -14,14 +16,19 @@ class AuthController extends ApplicationController {
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $result = $this->validate(array('username' => $username, 'password' => $password));
-        $result = array_search('invalid', $result);
+        $data = array(
+            'username' => $username, 
+            'password' => $password
+        );
 
-        if($result){
-            $_SESSION['error'] = $this->errMsg;
-            $this->selfRedirect();
+        $loginAttempt = $this->userDB->checkCredentials($data);
+
+        if($loginAttempt){
+            $this->redirect('/blog');
+        } else {
+            $_SESSION['error'] = 'Incorrect username or password';
+            $this->redirect('/login');
         }
-
     }
 
     public function registerAction(){
