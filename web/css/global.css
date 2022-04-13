@@ -46,6 +46,10 @@ body, html {
     align-self: center;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .ml-18 {
     margin-left: 18px;
 }
