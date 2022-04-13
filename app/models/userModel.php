@@ -26,6 +26,29 @@ class UserModel extends Model {
         return $match;
     }
 
+    public function insertUser(array $data){
+
+        $user = [
+            'id' => intval(microtime(true) * 1000),
+            'username' => $data['username'],
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            'phone' => $data['phone'],
+            'email' => $data['email'],
+            'registerDate' => date('c')
+        ];
+
+        $result = $this->writeJSON('users', $user);
+
+        if ($result){
+            $result = ['type' => 'success'];
+            $_SESSION['loggedUser'] = $user;
+        } else {
+            $result = ['type' => 'error'];
+        }
+
+        return $result;
+    }
+
     public function writingTest(){
 
         $user = [
