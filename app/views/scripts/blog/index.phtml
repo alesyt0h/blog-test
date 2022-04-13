@@ -47,37 +47,20 @@
         <!-- Message Board -->
         <div class="border-10 border border-gray mb-20" id="posts">
             <ul>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
-                <li>
-                    <strong>2022.04.01</strong>
-                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
-                    <strong>By: Username</strong>
-                </li>
+                <?php foreach ($this->posts as $post) { ?>
+                    <?php $date =  new DateTime($post['postingDate']); ?>
+                    <li class="md-text">
+                        <strong class="text-gray"><?php echo $date->format('Y.m.d - H:i:s'); ?></strong>
+                        <p class="m-0"><?php echo $post['body']; ?></p>
+                        <strong class="text-gray">By: <?php echo $post['createdBy']; ?></strong>
+                    </li>
+                <?php }; ?>
             </ul>
+            <?php if(!count($this->posts)){ ?>
+                <div class="flex no-posts">
+                    <span>There are no posts in the system</span>
+                </div>
+            <?php }; ?>
         </div>
 
         <!-- Comment Box -->

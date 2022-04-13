@@ -63,6 +63,10 @@ body, html {
     color: white;
 }
 
+.text-gray {
+    color: rgb(80, 80, 80);
+}
+
 .vertical-super {
     vertical-align: super;
 }
@@ -193,8 +197,15 @@ textarea:focus {
 }
 
 #posts {
+    min-height: 410px;
     max-height: 410px;
     overflow-y: auto;
+}
+
+.no-posts {
+    margin: 22% 0;
+    text-align: center;
+    justify-content: center;
 }
 
 .border-b {

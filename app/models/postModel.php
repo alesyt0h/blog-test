@@ -17,6 +17,12 @@ class PostModel extends Model {
         return $result;
     }
 
+    public function getPosts(){
+        $posts = $this->getBlogPosts();
+
+        return array_reverse($posts);
+    }
+
     public function writingTest(){
 
         $post = [

@@ -8,10 +8,11 @@ class BlogController extends ApplicationController {
 
     public function indexAction(){
         $this->view->setTitle('Blog | ' . APP_TITLE);
-
         if (!$this->userIsLogged()) $this->redirect('/login');
-        // Get Posts and send them to view
-        // $this->view->posts = $posts;
+
+        // Send the posts to the view
+        $this->view->posts = $this->postDB->getPosts();
+
         if (!$_POST) return;
 
         $search = $_POST['search'] ?? '';
@@ -30,6 +31,8 @@ class BlogController extends ApplicationController {
             );
 
             $result = $this->postDB->insertPost($data);
+
+            if($result) $this->selfRedirect();
 
         }
         
