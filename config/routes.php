@@ -13,6 +13,7 @@
 $routes = array(
 	'/' => 'blog#index',
 	'/login' => 'auth#login',
+	'/logout' => 'auth#logout',
 	'/register' => 'auth#register',
 	'/blog' => 'blog#index'
 );

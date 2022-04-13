@@ -68,6 +68,16 @@ class AuthController extends ApplicationController {
     }
 
     /**
+     * Logout from the application removing the User stored in Session
+     */
+    public function logoutAction(){
+        $this->view->disableView();
+
+        unset($_SESSION['loggedUser']);
+        $this->redirect('/login');
+    }
+
+    /**
      * Validates multiple fields at once
      * 
      * @param array the data to be evaluated
