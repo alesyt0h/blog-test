@@ -6,6 +6,15 @@
  */
 class ApplicationController extends Controller 
 {
+
+    /**
+     * Verifies if there is a loggedUser stored in Session
+     * @return boolean true if logged, false otherwise 
+     */
+    protected function userIsLogged(){
+        return (isset($_SESSION['loggedUser'])) ? true : false;
+    }
+
     /**
      * Redirects the user to the webroot or another path if specified
      * 
