@@ -28,6 +28,10 @@ class UserModel extends Model {
 
     public function insertUser(array $data){
 
+        $taken = $this->emailOrUsernameTaken($data);
+
+        if($taken) return ['type' => 'error', 'msg' => $taken];
+
         $user = [
             'id' => intval(microtime(true) * 1000),
             'username' => $data['username'],
@@ -61,6 +65,25 @@ class UserModel extends Model {
 
         $this->writeJSON('users', $user);
 
+    }
+
+    public function emailOrUsernameTaken(array $data){
+
+        $this->getUsers();
+
+        $errMsg = '';
+
+        for ($i=0; $i < count($this->_users); $i++) { 
+            if($this->_users[$i]['username'] === $data['username']){
+                $errMsg .= '• This username is taken, please choose another.<br>';
+            }
+
+            if($this->_users[$i]['email'] === $data['email']){
+                $errMsg .= '• This email address is taken, please choose another.<br>';
+            }
+        }
+
+        return $errMsg;
     }
 
 }
