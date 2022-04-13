@@ -2,6 +2,10 @@
 
 class AuthController extends ApplicationController {
 
+    public function __construct(){
+        $this->db = new JsonModel();
+    }
+
     public function loginAction(){
         $this->view->message = "Hello from auth#login";
         $this->view->setTitle('Login Page');
