@@ -1,1 +1,47 @@
-<?php echo $this->message; ?>
+<div class="bg-white">
+    <form action="" method="POST">
+        <div class="flexed-card">
+            <h1 class="center">Create Account</h1>
+
+            <!-- TODO stylize error msg -->
+            <span>
+                <?php 
+                    echo $_SESSION['error'] ?? '';
+                    unset($_SESSION['error']);
+                ?>
+            </span>
+
+            <label for="username" class="ml-10 bold">Username</label>
+            <input type="text" name="username" placeholder="Username" value="<?php echo $_POST['username'] ?? '' ?>">
+            <br>
+            <label for="phone" class="ml-10 bold">Phone</label>
+            <input type="text" name="phone" placeholder="Phone" value="<?php echo $_POST['phone'] ?? '' ?>">
+            <br>
+            <label for="email" class="ml-10 bold">Email</label>
+            <input type="text" name="email" placeholder="Email" value="<?php echo $_POST['email'] ?? '' ?>">
+            <br>
+            <label for="password" class="ml-10 bold">Password</label>
+            <input type="password" name="password" placeholder="Password">
+    
+            <!-- TODO eye icon -->
+            <div>
+                <input type="checkbox" onclick="passwordShow()">Show Password
+            </div>
+
+            <span>
+                Already have an account? <a href="<?php echo WEB_ROOT . '/login'; ?>">Log in now!</a>
+            </span>
+
+            <button type="submit">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function passwordShow() {
+        const passInput = document.querySelector("input[name='password']");
+
+        passInput.type = (passInput.type === 'password') ? 'text' : 'password';
+    }
+</script>
