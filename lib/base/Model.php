@@ -14,9 +14,10 @@ class Model
 	public function __construct(){
         // Parse the DB's
         $this->parseJSON('posts');
-        // Must fetch posts
+        $this->fetchPosts();
+
         $this->parseJSON('users');
-        // Must fetch users
+        $this->fetchUsers();
     }
 
 	/**
@@ -60,8 +61,46 @@ class Model
      * @param string $db the database
      * @return exception|string returns an exception if DB wasn't users or posts, else append _ to the DB name and returns it 
      */
-    protected function dbChecker(string $db){
+    private function dbChecker(string $db){
         return ($db !== 'users' && $db !== 'posts') ? throw new Exception('Not a valid Database!') : $db = '_' . $db; 
+    }
+
+    /**
+     * Fetches the users stored in the _jsonData temp variable
+     * @return array returns the users in the system or an empty array if there is no users
+     */
+    private function fetchUsers(){
+        $this->_users = $this->_jsonData ?? [];
+        $this->_jsonData = [];
+
+        return $this->_users;
+    }
+
+    /**
+     * Fetches the blog posts stored in the _jsonData temp variable
+     * @return array returns the posts in the system or an empty array if there are no posts
+     */
+    private function fetchPosts(){
+        $this->_blogPosts = $this->_jsonData ?? [];
+        $this->_jsonData = [];
+
+        return $this->_blogPosts;
+    }
+
+    /**
+     * Get Blog Posts for inherited classes
+     * @return array returns the posts or an empty array if no there are no posts
+     */
+    protected function getBlogPosts(){
+        return $this->_blogPosts ?? [];
+    }
+
+    /**
+     * Get Users for inherited classes
+     * @return array returns the users or an empty array if no there are no users
+     */
+    protected function getUsers(){
+        return $this->_users ?? [];
     }
 
 }
