@@ -11,6 +11,7 @@ class AuthController extends ApplicationController {
     public function loginAction(){
         $this->view->setTitle('Login | ' . APP_TITLE);
 
+        if ($this->userIsLogged()) $this->redirect();
         if (!$_POST) return;
 
         $username = $_POST['username'] ?? '';
