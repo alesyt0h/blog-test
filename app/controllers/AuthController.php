@@ -10,6 +10,7 @@ class AuthController extends ApplicationController {
     
     public function loginAction(){
         $this->view->setTitle('Login | ' . APP_TITLE);
+        $this->view->appendScript('eyePass.js');
 
         if ($this->userIsLogged()) $this->redirect();
         if (!$_POST) return;
@@ -34,6 +35,7 @@ class AuthController extends ApplicationController {
 
     public function registerAction(){
         $this->view->setTitle('Create Account | ' . APP_TITLE);
+        $this->view->appendScript('eyePass.js');
 
         if ($this->userIsLogged()) $this->redirect();
         if (!$_POST) return;
