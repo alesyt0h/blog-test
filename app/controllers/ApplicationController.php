@@ -6,5 +6,8 @@
  */
 class ApplicationController extends Controller 
 {
-	
+    protected function selfRedirect(){
+		header('Location: ' . WEB_ROOT . substr($_SERVER['REQUEST_URI'], strlen(WEB_ROOT)));
+		die();
+	}
 }

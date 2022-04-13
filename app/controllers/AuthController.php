@@ -19,6 +19,7 @@ class AuthController extends ApplicationController {
 
         if($result){
             $_SESSION['error'] = $this->errMsg;
+            $this->selfRedirect();
         }
 
     }
