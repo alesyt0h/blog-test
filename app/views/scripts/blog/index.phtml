@@ -1,1 +1,89 @@
-<?php echo $this->message; ?>
+<!-- Logout Button -->
+<a id="logout" class="absolute logout-icon pointer" href="<?php echo WEB_ROOT . '/logout'; ?>">
+    <span class="text-white vertical-super">Logout</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-25 w-25" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+</a>
+
+<!-- Messages View -->
+<div class="bg-white border-10 shadow w-1000">
+    <div class="flexed-card">
+        <h1 class="center mb-20">Message Posting View</h1>
+
+        <!-- Search -->
+        <div class="mb-20">
+            <form action="" method="POST" id="searchForm">
+                <div class="flex">
+                    <div class="relative">
+                        <label for="from">⠀</label>
+                        <input type="text" name="search" class="input mr-5 search-date" value="<?php echo $_POST['search'] ?? ''; ?>" placeholder="Search..">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 pointer absolute glass-icon" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2" onclick="document.querySelector('#searchForm').submit()" onkeydown="">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <button class="btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
+                            type="button" onclick="this.classList.toggle('hidden');this.nextElementSibling.classList.toggle('hidden')">
+                        Advanced Search
+                    </button>
+                    <div class="flex-row flex <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? '' : 'hidden'; ?>">
+                        <div>
+                            <label for="from" class="ml-5">From:</label>
+                            <input type="date" name="from" id="" class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>">
+                        </div>
+                        <div>
+                            <label for="to" class="ml-5">To:</label>
+                            <input type="date" name="to" id="" class="ml-5 input search-date" max="<?php echo date('Y-m-d')?>">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Message Board -->
+        <div class="border-10 border border-gray mb-20" id="posts">
+            <ul>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+                <li>
+                    <strong>2022.04.01</strong>
+                    <p class="m-0 md-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed iusto repellat nulla! Explicabo officiis provident voluptatum impedit magni dignissimos in fuga. Tempora quae vero molestiae possimus, ad commodi recusandae earum.</p>
+                    <strong>By: Username</strong>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Comment Box -->
+        <div class="border border-b border-gray border-10">
+            <form action="" method="POST">
+                <div class="flex justify-between">
+                    <textarea name="postMessage" class="w-full m-20" rows="3" placeholder="Write a comment..." maxlength="255"></textarea>
+                    <button type="submit" class="btn post-btn center ml-5 mr-5">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
