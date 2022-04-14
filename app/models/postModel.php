@@ -2,6 +2,12 @@
 
 class PostModel extends Model {
 
+    /**
+     * Inserts a post in the JSON DB
+     * 
+     * @param array the post array containing the createdBy(username) and the body of the post
+     * @return int|false the result of the file_put_contents used by the writeJSON method
+     */
     public function insertPost(array $data){
 
         $post = [
@@ -16,6 +22,12 @@ class PostModel extends Model {
         return $result;
     }
 
+    /**
+     * Search posts in DB by text, date range or both
+     * 
+     * @param array an array containing the search term, the "from" date and the "to" date
+     * @return array of the found posts using the search criteria, empty if none were found
+     */
     public function search(array $data){
 
         $this->data = $data;
@@ -46,9 +58,13 @@ class PostModel extends Model {
         $posts = array_splice($posts, 0);
 
         return array_reverse($posts);
-
     }
 
+    /**
+     * Get all posts in the DB
+     * 
+     * @return array all posts in the DB
+     */
     public function getPosts(){
         $posts = $this->getBlogPosts();
 

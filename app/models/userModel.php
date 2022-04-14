@@ -2,6 +2,12 @@
 
 class UserModel extends Model {
 
+    /**
+     * Checks the given credentials 
+     * 
+     * @param array an array containing the username and the password
+     * @return bool
+     */
     public function checkCredentials(array $data){
 
         $this->getUsers();
@@ -10,7 +16,7 @@ class UserModel extends Model {
 
         for ($i=0; $i < count($this->_users); $i++) { 
             
-            if($this->_users[$i]['username'] === $data['username']){
+            if(strtolower($this->_users[$i]['username']) === strtolower($data['username'])){
                 $validation = password_verify($data['password'], $this->_users[$i]['password']);
 
                 if($validation){
@@ -26,6 +32,12 @@ class UserModel extends Model {
         return $match;
     }
 
+    /**
+     * Inserts a user in the JSON DB
+     * 
+     * @param array receives the data, containing the username, password, phone and email
+     * @return array an array containing the type (sucess or error) and message to return if the email or user are taken
+     */
     public function insertUser(array $data){
 
         $taken = $this->emailOrUsernameTaken($data);
@@ -53,6 +65,12 @@ class UserModel extends Model {
         return $result;
     }
 
+    /**
+     * Checks if the email or the username are taken
+     * 
+     * @param array a full user array (username, phone, email, password)
+     * @return string containing the is taken message, empty otherwise
+     */
     public function emailOrUsernameTaken(array $data){
 
         $this->getUsers();

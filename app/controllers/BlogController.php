@@ -8,7 +8,7 @@ class BlogController extends ApplicationController {
 
     public function indexAction(){
         $this->view->setTitle('Blog | ' . APP_TITLE);
-        if (!$this->userIsLogged()) $this->redirect('/login');
+        if (!$this->userIsLogged()) $this->redirect('/login'); // AuthGuard
 
         // Send the posts to the view
         $this->view->posts = array_reverse($this->postDB->getPosts());
@@ -23,6 +23,7 @@ class BlogController extends ApplicationController {
 
         if($type === 'post'){
 
+            // Empty posts or bigger than 255 chars can't continue
             if(!strlen(trim($post)) || strlen(trim($post)) > 255) $this->selfRedirect();
 
             $data = array(
@@ -32,11 +33,12 @@ class BlogController extends ApplicationController {
 
             $result = $this->postDB->insertPost($data);
 
-            if($result) $this->selfRedirect();
+            if($result) $this->selfRedirect(); // Redirects to prevent form resubmission on reload
         }
 
         if($type === 'search'){
 
+            // If search term, from & to dates are empty the app will self reload 
             if(!strlen(trim($search)) && !$from && !$to) $this->selfRedirect();
 
             $this->view->searchInProgress = true;
@@ -53,6 +55,7 @@ class BlogController extends ApplicationController {
                 $this->view->searchFailed = true;
             }
 
+            // Send the obtained results to the view
             $this->view->posts = $posts;
         }
     }

@@ -2,6 +2,7 @@
 
 class AuthController extends ApplicationController {
     
+    // This class property is to show all the validation errors at once
     protected $errMsg = '';
 
     public function __construct(){
@@ -10,9 +11,9 @@ class AuthController extends ApplicationController {
     
     public function loginAction(){
         $this->view->setTitle('Login | ' . APP_TITLE);
-        $this->view->appendScript('eyePass.js');
+        $this->view->appendScript('eyePass.js'); // Script for the password hide/show feature on the input
 
-        if ($this->userIsLogged()) $this->redirect();
+        if ($this->userIsLogged()) $this->redirect(); // AuthGuard - Don't allow if the user is already logged
         if (!$_POST) return;
 
         $username = $_POST['username'] ?? '';
@@ -28,6 +29,7 @@ class AuthController extends ApplicationController {
         if($loginAttempt){
             $this->redirect('/blog');
         } else {
+            // Login doesn't clarify which field is wrong for security reasons
             $_SESSION['error'] = 'Incorrect username or password';
             $this->redirect('/login');
         }
@@ -35,9 +37,9 @@ class AuthController extends ApplicationController {
 
     public function registerAction(){
         $this->view->setTitle('Create Account | ' . APP_TITLE);
-        $this->view->appendScript('eyePass.js');
+        $this->view->appendScript('eyePass.js'); // Script for the password hide/show feature on the input
 
-        if ($this->userIsLogged()) $this->redirect();
+        if ($this->userIsLogged()) $this->redirect(); // AuthGuard - Don't allow if the user is already logged
         if (!$_POST) return;
 
         $username = $_POST['username'] ?? '';
@@ -52,6 +54,7 @@ class AuthController extends ApplicationController {
             'password' => $password,
         ));
 
+        // Sends to the session the full error message to be displayed on the view
         if(array_search('invalid', $data)){
             $_SESSION['error'] = $this->errMsg;
             $this->selfRedirect();
@@ -68,7 +71,7 @@ class AuthController extends ApplicationController {
     }
 
     /**
-     * Logout from the application removing the User stored in Session
+     * Logout from the application removing the User stored in Session and redirects back to login
      */
     public function logoutAction(){
         $this->view->disableView();
@@ -80,7 +83,7 @@ class AuthController extends ApplicationController {
     /**
      * Validates multiple fields at once
      * 
-     * @param array the data to be evaluated
+     * @param array the data to be evaluated, can be usernames, phones, email or passwords
      * @return array the data with some values being invalid if validation failed for those fields
      */
     public function validate(array $data){
