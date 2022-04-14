@@ -33,6 +33,8 @@ class PostModel extends Model {
         $this->data = $data;
         $posts = $this->getPosts();
 
+        if(!count($posts)) return [];
+
         // Case insensitive
         $this->search = ($this->data['search']) ? "/(?i)" . $this->data['search'] . "/" : ''; 
         // Since this app can't edit postingDates, first item in the posts array has the first post made in the system
