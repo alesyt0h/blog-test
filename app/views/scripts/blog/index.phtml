@@ -25,7 +25,7 @@
                         </svg>
                     </div>
                     <!-- Advanced Search Button -->
-                    <button class="ml-5 btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
+                    <button class="mr-5 ml-5 btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
                             type="button" onclick="this.classList.toggle('hidden');this.nextElementSibling.classList.toggle('hidden')">
                         Advanced Search
                     </button>
@@ -33,13 +33,25 @@
                     <div class="flex-row flex <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? '' : 'hidden'; ?>">
                         <div>
                             <label for="from" class="ml-5">From:</label>
-                            <input type="date" name="from" id="" class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>">
+                            <input type="date" name="from" id="" 
+                                   class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>"
+                                   value="<?php echo ($_POST['from'] ?? '') ? date_format(new DateTime($_POST['from']), 'Y-m-d') : ''; ?>">
                         </div>
                         <div>
                             <label for="to" class="ml-5">To:</label>
-                            <input type="date" name="to" id="" class="ml-5 input search-date" max="<?php echo date('Y-m-d')?>">
+                            <input type="date" name="to" id="" 
+                                   class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>"
+                                   value="<?php echo ($_POST['to'] ?? '') ? date_format(new DateTime($_POST['to']), 'Y-m-d') : ''; ?>">
                         </div>
                     </div>
+                    <!-- Clear Filters Button -->
+                    <button class="ml-5 btn-alt align-end <?php echo ($this->searchInProgress) ? '' : 'hidden'; ?>"   
+                            type="button" onclick="window.location.href = '<?php echo WEB_ROOT . '/blog'; ?>';">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 vertical-middle" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                        Clear Filters
+                    </button>
                 </div>
             </form>
         </div>
@@ -56,7 +68,11 @@
                     </li>
                 <?php }; ?>
             </ul>
-            <?php if(!count($this->posts)){ ?>
+            <?php if($this->searchFailed){ ?>
+                <div class="flex no-posts">
+                    <span>No posts were found using your search criteria</span>
+                </div>
+            <?php } else if (!count($this->posts)) {; ?>
                 <div class="flex no-posts">
                     <span>There are no posts in the system</span>
                 </div>

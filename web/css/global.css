@@ -71,6 +71,10 @@ body, html {
     vertical-align: super;
 }
 
+.vertical-middle {
+    vertical-align: middle;
+}
+
 #logout:hover span, #logout:hover svg {
     color:rgb(146, 146, 146);
     stroke:rgb(146, 146, 146)

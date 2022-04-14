@@ -53,20 +53,6 @@ class UserModel extends Model {
         return $result;
     }
 
-    public function writingTest(){
-
-        $user = [
-            'id' => intval(microtime(true) * 1000),
-            'username' => 'Juanito',
-            'password' => password_hash('123456-W', PASSWORD_DEFAULT),
-            'phone' => '3176845451',
-            'registerDate' => date('Y-m-d H:i:s')
-        ];
-
-        $this->writeJSON('users', $user);
-
-    }
-
     public function emailOrUsernameTaken(array $data){
 
         $this->getUsers();
@@ -74,11 +60,12 @@ class UserModel extends Model {
         $errMsg = '';
 
         for ($i=0; $i < count($this->_users); $i++) { 
-            if($this->_users[$i]['username'] === $data['username']){
+            if(strtolower($this->_users[$i]['username']) === strtolower($data['username'])){
                 $errMsg .= '• This username is taken, please choose another.<br>';
+                
             }
 
-            if($this->_users[$i]['email'] === $data['email']){
+            if(strtolower($this->_users[$i]['email']) === strtolower($data['email'])){
                 $errMsg .= '• This email address is taken, please choose another.<br>';
             }
         }
