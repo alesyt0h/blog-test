@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class manages the JSON files, writing and parsing and common methods like findOneById
+ * This class manages the JSON files, writing and parsing
  */
 class Model
 {
@@ -52,27 +52,6 @@ class Model
 
         $rawData = json_encode($this->_jsonData, JSON_PRETTY_PRINT);
         $result = @file_put_contents($this->dbDir . substr($db, 1) . '.json', $rawData);
-
-        return $result;
-    }
-
-    /**
-     * Finds and return the match of the given ID
-     * @param int $id the id of the post or user
-     * @param string $db the database to search for. Only users & posts are valid values
-     */
-    public function findOneById(int $id, string $db){
-
-        $db = $this->dbChecker($db);
-
-        $result = [];
-
-        for ($i=0; $i < count($this->$db); $i++) { 
-            if($this->$db[$i]['id'] === $id){
-                $result = $this->$db[$i];
-                break;
-            }
-        }
 
         return $result;
     }

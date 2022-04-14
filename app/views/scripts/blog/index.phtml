@@ -1,1 +1,93 @@
-<?php echo $this->message; ?>
+<!-- Logout Button -->
+<a id="logout" class="absolute logout-icon pointer" href="<?php echo WEB_ROOT . '/logout'; ?>">
+    <span class="text-white vertical-super">Logout</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-25 w-25" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+</a>
+
+<!-- Messages View -->
+<div class="bg-white border-10 shadow w-1000">
+    <div class="flexed-card">
+        <h1 class="center mb-20">Message Posting View</h1>
+
+        <!-- Search -->
+        <div class="mb-20">
+            <form action="" method="POST" id="searchForm">
+                <div class="flex">
+                    <!-- Search Input -->
+                    <div class="relative">
+                        <label for="from">⠀</label>
+                        <input type="text" name="search" class="input mr-5 search-date" value="<?php echo $_POST['search'] ?? ''; ?>" placeholder="Search..">
+                        <input type="hidden" name="type" value="search">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 pointer absolute glass-icon" fill="none" viewBox="0 0 24 24" stroke="gray" stroke-width="2" onclick="document.querySelector('#searchForm').submit()" onkeydown="">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <!-- Advanced Search Button -->
+                    <button class="mr-5 ml-5 btn-alt align-end <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? 'hidden' : ''; ?>"   
+                            type="button" onclick="this.classList.toggle('hidden');this.nextElementSibling.classList.toggle('hidden')">
+                        Advanced Search
+                    </button>
+                    <!-- DateTime Selectors -->
+                    <div class="flex-row flex <?php echo (($_POST['from'] ?? null) || ($_POST['to'] ?? null)) ? '' : 'hidden'; ?>">
+                        <div>
+                            <label for="from" class="ml-5">From:</label>
+                            <input type="date" name="from" id="" 
+                                   class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>"
+                                   value="<?php echo ($_POST['from'] ?? '') ? date_format(new DateTime($_POST['from']), 'Y-m-d') : ''; ?>">
+                        </div>
+                        <div>
+                            <label for="to" class="ml-5">To:</label>
+                            <input type="date" name="to" id="" 
+                                   class="ml-5 mr-5 input search-date" max="<?php echo date('Y-m-d')?>"
+                                   value="<?php echo ($_POST['to'] ?? '') ? date_format(new DateTime($_POST['to']), 'Y-m-d') : ''; ?>">
+                        </div>
+                    </div>
+                    <!-- Clear Filters Button -->
+                    <button class="ml-5 btn-alt align-end <?php echo ($this->searchInProgress) ? '' : 'hidden'; ?>"   
+                            type="button" onclick="window.location.href = '<?php echo WEB_ROOT . '/blog'; ?>';">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 vertical-middle" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                        Clear Filters
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Message Board -->
+        <div class="border-10 border border-gray mb-20" id="posts">
+            <ul>
+                <?php foreach ($this->posts as $post) { ?>
+                    <?php $date =  new DateTime($post['postingDate']); ?>
+                    <li class="md-text">
+                        <strong class="text-gray"><?php echo $date->format('Y.m.d - H:i:s'); ?></strong>
+                        <p class="m-0"><?php echo $post['body']; ?></p>
+                        <strong class="text-gray">By: <?php echo $post['createdBy']; ?></strong>
+                    </li>
+                <?php }; ?>
+            </ul>
+            <?php if($this->searchFailed){ ?>
+                <div class="flex no-posts">
+                    <span>No posts were found using your search criteria</span>
+                </div>
+            <?php } else if (!count($this->posts)) {; ?>
+                <div class="flex no-posts">
+                    <span>There are no posts in the system</span>
+                </div>
+            <?php }; ?>
+        </div>
+
+        <!-- Comment Box -->
+        <div class="border border-b border-gray border-10">
+            <form action="" method="POST">
+                <div class="flex justify-between">
+                    <textarea name="postMessage" class="w-full m-20" rows="3" placeholder="Write a comment..." maxlength="255"></textarea>
+                    <input type="hidden" name="type" value="post">
+                    <button type="submit" class="btn post-btn center ml-5 mr-5">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
